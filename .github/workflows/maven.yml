@@ -29,10 +29,10 @@ jobs:
       - name: Check MySQL container status
         run: docker ps
 
-      - name: Create database
-        run: mysql -u root -p root -e "CREATE DATABASE vendor;"
+      - name: Create Database
+        run: mysql -h 127.0.0.1 -P 3306 -u root -p root -e "CREATE DATABASE vendor;"
 
-#      - name: Set up MySQL
+      #      - name: Set up MySQL
 #        with:
 #          mysql-version: 8.0.26
 #      - name: Create database
