@@ -23,11 +23,14 @@ jobs:
           java-version: '17'
 
       - name: Set up MySQL
-        uses: mhoran93/actions-setup-mysql@v1
-        with:
-          mysql-version: 8.0.26
-      - name: Create database
-        run: mysql -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE vendor;"
+        run: |
+          docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=vendor -e MYSQL_USER=root -e MYSQL_PASSWORD=root mysql:8.0
+
+#      - name: Set up MySQL
+#        with:
+#          mysql-version: 8.0.26
+#      - name: Create database
+#        run: mysql -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE vendor;"
 
       - name: Build with Maven
         run: mvn clean install
