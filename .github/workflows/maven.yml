@@ -26,6 +26,9 @@ jobs:
         run: |
           docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=vendor -e MYSQL_USER=root -e MYSQL_PASSWORD=root mysql:8.0
 
+      - name: Create database
+        run: mysql -u ${{ secrets.MYSQL_USERNAME }} -p${{ secrets.MYSQL_PASSWORD }} -e "CREATE DATABASE my_database;"
+
 #      - name: Set up MySQL
 #        with:
 #          mysql-version: 8.0.26
