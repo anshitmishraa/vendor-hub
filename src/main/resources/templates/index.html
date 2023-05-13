@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Hub</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+<body>
+<h1>Vendor Hub</h1>
+<!-- Vendor Creation Form -->
+<h2>Create Vendor</h2>
+<form id="createVendorForm">
+    <label for="name">Vendor Name*</label>
+    <input type="text" id="name" required>
+    <label for="bankAccountNo">Bank Account No.*</label>
+    <input type="text" id="bankAccountNo" required>
+    <label for="bankName">Bank Name*</label>
+    <input type="text" id="bankName" required>
+    <label for="addressLine1">Address Line 1</label>
+    <input type="text" id="addressLine1">
+    <label for="addressLine2">Address Line 2</label>
+    <input type="text" id="addressLine2">
+    <label for="city">City</label>
+    <input type="text" id="city">
+    <label for="country">Country</label>
+    <input type="text" id="country">
+    <label for="zipCode">Zip Code</label>
+    <input type="text" id="zipCode">
+    <button type="submit">Create Vendor</button>
+</form>
+<!-- Vendor List -->
+<h2>Vendor List</h2>
+<table id="vendorTable">
+    <thead>
+    <tr>
+        <th>Vendor Name</th>
+        <th>Bank Account No.</th>
+        <th>Bank Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<!-- Vendor Update -->
+<form id="updateVendorForm">
+    <!-- Existing form fields -->
+    <input type="hidden" id="vendorId">
+    <!-- Modal -->
+    <div id="editVendorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="editVendorForm">
+                <!-- Edit form fields -->
+                <label for="name">Vendor Name*</label>
+                <input type="text" id="updateName" required>
+                <label for="bankAccountNo">Bank Account No.*</label>
+                <input type="text" id="updateBankAccountNo" required>
+                <label for="bankName">Bank Name*</label>
+                <input type="text" id="updateBankName" required>
+                <label for="addressLine1">Address Line 1</label>
+                <input type="text" id="updateAddressLine1">
+                <label for="addressLine2">Address Line 2</label>
+                <input type="text" id="updateAddressLine2">
+                <label for="city">City</label>
+                <input type="text" id="updateCity">
+                <label for="country">Country</label>
+                <input type="text" id="updateCountry">
+                <label for="zipCode">Zip Code</label>
+                <input type="text" id="updateZipCode">
+                <button type="submit">Update Vendor</button>
+            </form>
+        </div>
+    </div>
+</form>
+<!-- Success Message Container -->
+<div id="successContainer" class="message success" style="display: none;"></div>
+<!-- Error Message Container -->
+<div id="errorContainer" class="message error" style="display: none;">
+    <span class="close-button">&times;</span>
+    <p class="error-message"></p>
+</div>
+<script src="../static/js/script.js"></script>
+</body>
+</html>
