@@ -24,13 +24,13 @@ jobs:
 
       - name: Set up MySQL
         run: |
-          docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=vendor -e MYSQL_USER=root -e MYSQL_PASSWORD=root mysql:8.0
+          docker run -d --name mysql -p 127.0.0.1:3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=vendor -e MYSQL_USER=root -e MYSQL_PASSWORD=root mysql:8.0
 
       - name: Check MySQL container status
         run: docker ps
 
       - name: Create Database
-        run: mysql -h 127.0.0.1 -P 3306 -u root -p root -e "CREATE DATABASE vendor;"
+        run: mysql -h 127.0.0.1 -P 3306 -u root -p root --execute="CREATE DATABASE vendor;"
 
       #      - name: Set up MySQL
 #        with:
