@@ -35,6 +35,8 @@ jobs:
              - MYSQL_DATABASE=your_database_name
              - MYSQL_USER=your_username
              - MYSQL_PASSWORD=your_password" 
+             - MYSQL_HOST=localhost
+             - MYSQL_PORT=3306
 
       - name: Build with Maven
         run: mvn clean install
