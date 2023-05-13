@@ -43,6 +43,6 @@ jobs:
           image: anshitmishra/vendor-hub
           tags: latest
           registry: docker.io
-          dockerfile: Dockerfile.ci
+          dockerfile: Dockerfile
           username: anshitmishra
           password: Anshit@123
