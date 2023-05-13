@@ -27,7 +27,7 @@ jobs:
         with:
           mysql-version: 8.0.26
       - name: Create database
-        run: mysql -u ${{ secrets.MYSQL_USERNAME }} -p${{ secrets.MYSQL_PASSWORD }} -e "CREATE DATABASE vendor;"
+        run: mysql -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE vendor;"
 
       - name: Build with Maven
         run: mvn clean install
