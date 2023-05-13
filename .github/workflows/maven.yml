@@ -12,9 +12,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+
+
+
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up MySQL connection
+        run: mysql -h 127.0.0.1 -P 3306 -u root --password=password -e "CREATE DATABASE IF NOT EXISTS mydatabase"
 
       - name: Set up JDK
         uses: actions/setup-java@v2
@@ -22,16 +38,17 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Setup MySQL
-        uses: actions/setup-mysql@v1
-        with:
-          version: 5.7
 
-      - name: Create Database
-        run: mysql -u root -p password -e "CREATE DATABASE my_database"
-
-      - name: Seed Database
-        run: mysql -u root -p password my_database < my_database.sql
+#      - name: Setup MySQL
+#        uses: actions/setup-mysql@v1
+#        with:
+#          version: 5.7
+#
+#      - name: Create Database
+#        run: mysql -u root -p password -e "CREATE DATABASE my_database"
+#
+#      - name: Seed Database
+#        run: mysql -u root -p password my_database < my_database.sql
 
 #      - name: Set up MySQL
 #        run: |
