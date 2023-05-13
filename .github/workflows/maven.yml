@@ -21,10 +21,6 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-
-
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -37,34 +33,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-
-
-#      - name: Setup MySQL
-#        uses: actions/setup-mysql@v1
-#        with:
-#          version: 5.7
-#
-#      - name: Create Database
-#        run: mysql -u root -p password -e "CREATE DATABASE my_database"
-#
-#      - name: Seed Database
-#        run: mysql -u root -p password my_database < my_database.sql
-
-#      - name: Set up MySQL
-#        run: |
-#          docker run -d --name mysql -p 127.0.0.1:3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=vendor -e MYSQL_USER=root -e MYSQL_PASSWORD=root mysql:8.0
-#
-#      - name: Check MySQL container status
-#        run: docker ps
-#
-#      - name: Create Database
-#        run: mysql -h 127.0.0.1 -P 3306 -u root -p root --execute="CREATE DATABASE vendor;"
-
-      #      - name: Set up MySQL
-#        with:
-#          mysql-version: 8.0.26
-#      - name: Create database
-#        run: mysql -u ${{ secrets.DB_USERNAME }} -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE vendor;"
 
       - name: Build with Maven
         run: mvn clean install
