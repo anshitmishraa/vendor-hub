@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up MySQL connection
-        run: mysql -h 127.0.0.1 -P 3306 -u root --password=root -e "CREATE DATABASE IF NOT EXISTS vendor"
+        run: mysql -h 127.0.0.1 -P 3306 -u root --password=password -e "CREATE DATABASE IF NOT EXISTS vendor"
 
       - name: Set up JDK
         uses: actions/setup-java@v2
