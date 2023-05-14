@@ -12,7 +12,7 @@ public class VendorValidation {
         validateName(vendor.getName());
         validateBankAccountNo(vendor.getBankAccountNo());
         validateBankName(vendor.getBankName());
-        validateNumericFields(vendor);
+        validateZipCode(vendor.getZipCode());
     }
 
     private void validateName(String name) {
@@ -37,12 +37,8 @@ public class VendorValidation {
         }
     }
 
-    private void validateNumericFields(Vendor vendor) {
-        if (!StringUtils.isNumeric(vendor.getBankAccountNo())) {
-            throw new IllegalArgumentException(Constants.BANK_ACCOUNT_NUMBER_DIGITS);
-        }
-
-        if (!StringUtils.isNumeric(vendor.getZipCode())) {
+    private void validateZipCode(String zipCode) {
+        if (!StringUtils.isNumeric(zipCode)) {
             throw new IllegalArgumentException(Constants.ZIP_CODE_DIGITS);
         }
     }

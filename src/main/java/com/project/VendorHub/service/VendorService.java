@@ -60,7 +60,7 @@ public class VendorService {
     public void updateVendor(Long id, Vendor vendorDetails)  {
         Vendor vendor = vendorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Vendor not found"));
 
-        vendorValidation.validationVendor(vendor);
+        vendorValidation.validationVendor(vendorDetails);
 
         String name = vendorDetails.getName();
         String bankAccountNo = vendorDetails.getBankAccountNo();
