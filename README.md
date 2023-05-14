@@ -4,6 +4,12 @@
 
 - [Introduction](#introduction)
 - [API Documentation](#api-documentation)
+  - [Create a Vendor](#create-a-vendor)
+  - [Get All Vendors](#get-all-vendors) 
+  - [Get Vendor by ID](#get-vendor-by-id)
+  - [Update Vendor](#update-vendor)
+  - [Delete Vendor](#delete-vendor)
+- [Error Responses](#error-responses)
 
 ## Introduction
 
