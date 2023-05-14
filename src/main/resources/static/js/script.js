@@ -3,11 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	const createVendorForm = document.getElementById('createVendorForm');
 	const vendorTableBody = document.querySelector('#vendorTable tbody');
 
-	const BASE_URL = 'http://localhost:8080';
-	const FRONTEND_ORIGIN = 'http://localhost:63342';
-
 	function editVendor(id) {
-		fetch(`${BASE_URL}/vendors/${id}`)
+		fetch(`/vendors/${id}`)
 			.then(response => response.json())
 			.then(data => {
 				// Populate the form fields with the fetched vendor details
@@ -35,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Function to handle vendor deletion
 	function deleteVendor(id) {
-		fetch(`${BASE_URL}/vendors/${id}`, {
+		fetch(`/vendors/${id}`, {
 				method: 'DELETE'
 			})
 			.then(response => {
@@ -74,11 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Function to fetch and display the vendor list
 	function fetchVendors() {
-		fetch(`${BASE_URL}/vendors`, {
-				mode: 'cors',
-				headers: {
-					'Access-Control-Allow-Origin': FRONTEND_ORIGIN
-				}
+		fetch(`/vendors`, {
+				mode: 'cors'
 			})
 			.then(response => response.json())
 			.then(data => {
