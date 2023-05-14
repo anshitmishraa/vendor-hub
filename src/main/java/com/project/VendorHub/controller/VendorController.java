@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = Constants.FRONTEND_ORIGIN)
 @RequestMapping("/vendors")
 public class VendorController{
     private static final Logger logger = LoggerFactory.getLogger(VendorController.class);
