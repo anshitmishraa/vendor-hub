@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			zipCode
 		};
 
-		fetch(`${BASE_URL}/vendors`, {
+		fetch(`/vendors`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		};
 
 		// Make a PUT request to update the vendor details
-		fetch(`${BASE_URL}/vendors/${id}`, {
+		fetch(`/vendors/${id}`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'
