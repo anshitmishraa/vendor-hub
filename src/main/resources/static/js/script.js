@@ -36,21 +36,21 @@ document.addEventListener('DOMContentLoaded', function() {
 				method: 'DELETE'
 			})
 			.then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return response.json().then(data => {
-                        throw new Error(data.message);
-                    });
-                }
-            })
-            .then(data => {
-                showSuccess(data.message);
-                fetchVendors();
-            })
-            .catch(error => {
-                showError(error);
-            });
+				if (response.ok) {
+					return response.json();
+				} else {
+					return response.json().then(data => {
+						throw new Error(data.message);
+					});
+				}
+			})
+			.then(data => {
+				showSuccess(data.message);
+				fetchVendors();
+			})
+			.catch(error => {
+				showError(error);
+			});
 	}
 
 	// Add event listener to the vendor table body
@@ -69,25 +69,64 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 
+	// Populate vendor table with pagination
+	function populateVendorTable(vendors, pageable) {
+		const vendorTableBody = document.getElementById('vendorTableBody');
+		vendorTableBody.innerHTML = '';
+
+		vendors.forEach(function(vendor) {
+			const row = document.createElement('tr');
+			row.innerHTML = `
+              <td>${vendor.name}</td>
+              <td>${vendor.bankAccountNo}</td>
+              <td>${vendor.bankName}</td>
+              <td><button onclick="editVendor(${vendor.id})">Edit</button></td>
+              <td><button onclick="deleteVendor(${vendor.id})">Delete</button></td>
+          `;
+			vendorTableBody.appendChild(row);
+		});
+
+		// Display pagination
+		const paginationContainer = document.getElementById('paginationContainer');
+		paginationContainer.innerHTML = '';
+
+		if (!pageable.empty) {
+			const currentPage = pageable.pageNumber;
+			const totalPages = pageable.totalPages;
+
+			const previousButton = document.createElement('button');
+			previousButton.innerText = 'Previous';
+			previousButton.disabled = currentPage === 0;
+			previousButton.onclick = function() {
+				fetchVendors(currentPage - 1);
+			};
+
+			const nextButton = document.createElement('button');
+			nextButton.innerText = 'Next';
+			nextButton.disabled = currentPage === totalPages - 1;
+			nextButton.onclick = function() {
+				fetchVendors(currentPage + 1);
+			};
+
+			paginationContainer.appendChild(previousButton);
+			paginationContainer.appendChild(nextButton);
+		}
+	}
+
 	// Function to fetch and display the vendor list
-	function fetchVendors() {
-		fetch(`/vendors`, {
+	function fetchVendors(pageNumber = 0) {
+		fetch(`/vendors?page=${pageNumber}`, {
 				mode: 'cors'
 			})
 			.then(response => response.json())
 			.then(data => {
-				vendorTableBody.innerHTML = '';
-				data.content.forEach(vendor => {
-					const row = document.createElement('tr');
-					row.innerHTML = `
-                        <td>${vendor.name}</td>
-                        <td>${vendor.bankAccountNo}</td>
-                        <td>${vendor.bankName}</td>
-                        <td><a href="#" class="edit-link" data-vendor-id="${vendor.id}">Edit</a></td>
-                        <td><a href="#" class="delete-link" data-vendor-id="${vendor.id}">Delete</a></td>
-                    `;
-					vendorTableBody.appendChild(row);
-				});
+				const vendors = data.content;
+				const pageable = {
+					pageNumber: data.pageable.pageNumber,
+					totalPages: data.totalPages,
+					empty: data.empty
+				};
+				populateVendorTable(vendors, pageable);
 			});
 	}
 
@@ -123,21 +162,21 @@ document.addEventListener('DOMContentLoaded', function() {
 				body: JSON.stringify(vendor)
 			})
 			.then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return response.json().then(data => {
-                        throw new Error(data.message);
-                    });
-                }
-            })
-            .then(data => {
-                showSuccess(data.message);
-                fetchVendors();
-            })
-            .catch(error => {
-                showError(error);
-            });
+				if (response.ok) {
+					return response.json();
+				} else {
+					return response.json().then(data => {
+						throw new Error(data.message);
+					});
+				}
+			})
+			.then(data => {
+				showSuccess(data.message);
+				fetchVendors();
+			})
+			.catch(error => {
+				showError(error);
+			});
 	});
 
 	document.getElementById('updateVendorForm').addEventListener('submit', function(event) {
@@ -218,20 +257,20 @@ window.addEventListener('click', function(event) {
 
 // Function to show the error message and hide it when the close button is clicked
 function showError(message) {
-    const errorContainer = document.getElementById('errorContainer');
-    const closeButton = errorContainer.querySelector('.close-button');
-    const errorMessage = errorContainer.querySelector('.error-message');
+	const errorContainer = document.getElementById('errorContainer');
+	const closeButton = errorContainer.querySelector('.close-button');
+	const errorMessage = errorContainer.querySelector('.error-message');
 
-    errorMessage.textContent = message;
-    errorContainer.style.display = 'block';
+	errorMessage.textContent = message;
+	errorContainer.style.display = 'block';
 
-    closeButton.addEventListener('click', function() {
-        errorContainer.style.opacity = '0';
-        setTimeout(function() {
-            errorContainer.style.display = 'none';
-            errorContainer.style.opacity = '1';
-        }, 300);
-    });
+	closeButton.addEventListener('click', function() {
+		errorContainer.style.opacity = '0';
+		setTimeout(function() {
+			errorContainer.style.display = 'none';
+			errorContainer.style.opacity = '1';
+		}, 300);
+	});
 }
 
 
