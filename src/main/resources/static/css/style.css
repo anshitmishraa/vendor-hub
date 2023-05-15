@@ -179,5 +179,58 @@ table a:hover {
   background-color: rgba(244, 67, 54, 0.8);
 }
 
+/* Previous and Next Buttons */
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 4px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
 
+.button:hover {
+  background-color: #45a049;
+}
 
+.button:disabled {
+  background-color: #aaaaaa;
+  cursor: not-allowed;
+}
+
+/* Edit and Delete Buttons */
+.edit-button,
+.delete-button {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 4px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #0b7dda;
+}
+
+.edit-button:focus,
+.delete-button:focus {
+  outline: none;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
