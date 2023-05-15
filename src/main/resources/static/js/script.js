@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <td>${vendor.name}</td>
               <td>${vendor.bankAccountNo}</td>
               <td>${vendor.bankName}</td>
-              <td><button onclick="editVendor(${vendor.id})">Edit</button></td>
-              <td><button onclick="deleteVendor(${vendor.id})">Delete</button></td>
+              <td><button class="edit-button" onclick="editVendor(${vendor.id})">Edit</button></td>
+              <td><button class="delete-button" onclick="deleteVendor(${vendor.id})">Delete</button></td>
           `;
 			vendorTableBody.appendChild(row);
 		});
@@ -97,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			const previousButton = document.createElement('button');
 			previousButton.innerText = 'Previous';
 			previousButton.disabled = currentPage === 0;
+            previousButton.classList.add("button");
+            previousButton.id = "previousButton";
 			previousButton.onclick = function() {
 				fetchVendors(currentPage - 1);
 			};
@@ -104,6 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			const nextButton = document.createElement('button');
 			nextButton.innerText = 'Next';
 			nextButton.disabled = currentPage === totalPages - 1;
+			nextButton.classList.add("button");
+			nextButton.id = "nextButton";
 			nextButton.onclick = function() {
 				fetchVendors(currentPage + 1);
 			};
