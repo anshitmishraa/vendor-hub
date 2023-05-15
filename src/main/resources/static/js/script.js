@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <td>${vendor.name}</td>
               <td>${vendor.bankAccountNo}</td>
               <td>${vendor.bankName}</td>
-              <td><button class="edit-button" onclick="editVendor(${vendor.id})">Edit</button></td>
-              <td><button class="delete-button" onclick="deleteVendor(${vendor.id})">Delete</button></td>
+              <td><a href="#" class="edit-button edit-link" data-vendor-id="${vendor.id}">Edit</a></td>
+              <td><a href="#" class="delete-button delete-link" data-vendor-id="${vendor.id}">Delete</a></td>
           `;
 			vendorTableBody.appendChild(row);
 		});
