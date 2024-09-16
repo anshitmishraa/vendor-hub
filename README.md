@@ -1,259 +1,223 @@
-# Vendor Hub
+# VendorHub
+
+VendorHub is a Spring Boot-based service that handles CRUD (Create, Read, Update, Delete) operations for managing vendor information. This system provides validation mechanisms for vendor attributes, ensuring data integrity and consistency. It includes functionality for paginated retrieval, as well as UI interaction for managing vendors through a web interface.
 
 ## Table of Contents
 
-- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies](#technologies)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
 - [API Documentation](#api-documentation)
-  - [Create a Vendor](#create-a-vendor)
-  - [Get All Vendors](#get-all-vendors) 
-  - [Get Vendor by ID](#get-vendor-by-id)
-  - [Update Vendor](#update-vendor)
-  - [Delete Vendor](#delete-vendor)
-- [Error Responses](#error-responses)
+- [Validation](#validation)
+- [UI Interaction](#ui-interaction)
+- [Pagination](#pagination)
+- [Error Handling](#error-handling)
 
-## Introduction
+## Features
 
-This project aims to develop a web application using Java Spring Boot and a chosen database. The application will have the following features:
-- Create Vendor: Users can enter details such as Vendor Name, Bank Account No., Bank Name, Address Line 1, Address Line 2, City, Country, and Zip Code to create a new vendor. The fields marked with (*) are mandatory. 
-- Display Paginated List of Vendors: The application will display a paginated list of vendors, showing their Vendor Name, Bank Account No., Bank Name, and options to edit or delete each vendor. 
-- Edit Vendor: Users can edit the details of a vendor by loading the vendor's information on the edit vendor screen. After making the necessary changes, they can submit the form to update the vendor's details. 
-- Delete Vendor: Users will have the option to delete a vendor after confirming their action. Once deleted, the vendor will be permanently removed from the system.
+1. **Vendor Management**: CRUD operations for vendor entities, including:
+  - Creating a new vendor
+  - Retrieving a vendor by ID
+  - Retrieving all vendors with pagination
+  - Updating vendor details
+  - Deleting a vendor
 
-The web application will provide a user-friendly interface for managing vendor information, ensuring the mandatory fields are filled, and offering convenient options for editing and deleting vendors.
+2. **Validation**: Ensures that vendor details such as bank account number, bank name, and address follow business rules.
 
-## API Documentation
+3. **Error Handling**: Graceful error handling with appropriate error messages when vendor operations fail.
 
-This document provides detailed information about the API endpoints available in the VendorHub application.
+4. **Pagination**: Supports pagination for vendor retrieval to manage large datasets efficiently.
 
-### Base URL
-The base URL for all API endpoints is: `/vendors`
+5. **Web Interface**: Provides a web-based interface to manage vendor information via forms and tables.
 
-#### Create a Vendor
+## Technologies
 
-##### Endpoint: `POST /vendors`
+- **Java 17**
+- **Spring Boot 3.x**
+- **JPA (Hibernate)**
+- **Jakarta Persistence API**
+- **PostgreSQL (or any RDBMS)**
 
-Creates a new vendor with the provided vendor details.
+## Project Structure
 
-##### Request Body:
-```json
-{
-  "name": "Deepak Jayaprakash",
-  "bankAccountNo": "6543214859",
-  "bankName": "DEF Bank",
-  "addressLine1": "686 TYPE 2 SECTOR 1",
-  "addressLine2": "BHEL RANIPUR",
-  "city": "HARIDWAR",
-  "country": "India",
-  "zipCode": "249403"
-}
+```bash
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com.project.VendorHub
+│   │   │       ├── entity
+│   │   │       ├── repository
+│   │   │       ├── service
+│   │   │       └── validation
+│   │   ├── resources
+│   │   │   └── application.properties
+│   └── test
+└── pom.xml
 ```
 
-##### Response:
+### Key Directories
 
-Success: `201 Created`
+- **entity**: Contains the `Vendor` entity class representing the vendor table in the database.
+- **repository**: JPA repository for performing database operations.
+- **service**: Contains `VendorService`, which handles business logic.
+- **validation**: Vendor validation rules are defined here.
 
-```json
-{
-"message": "Vendor has been created successfully."
-}
-```
+## Installation
 
-Failure: `400 Bad Request`
+### Prerequisites
 
-```json
-{
-"message": "Error message describing the issue."
-}
-```
+- JDK 17 or later
+- Maven 3.x
+- PostgreSQL (or any RDBMS of your choice)
 
-#### Get All Vendors
+### Steps
 
-##### Endpoint: `GET /vendors`
+1. Clone the repository:
 
-Retrieves a paginated list of all vendors.
+   ```bash
+   git clone https://github.com/anshitmishraa/vendor-hub.git
+   cd vendor-hub
+   ```
 
-###### Parameters:
+2. Configure the database settings in `src/main/resources/application.properties`:
 
-- `page (optional)`: Page number to retrieve `(default: 1)`
-- `size (optional)`: Number of vendors per page `(default: 10)`
-  
-##### Response:
+   ```properties
+   spring.datasource.url=jdbc:postgresql://localhost:5432/vendorhub
+   spring.datasource.username=your-username
+   spring.datasource.password=your-password
+   spring.jpa.hibernate.ddl-auto=update
+   ```
 
-Success: `200 OK`
+3. Build the project:
 
-```json
-{
-  "content": [
-    {
-      "id": 1,
-      "name": "Deepak Jayaprakash",
-      "bankAccountNo": "6543214859",
-      "bankName": "DEF Bank",
-      "addressLine1": "686 TYPE 2 SECTOR 1",
-      "addressLine2": "BHEL RANIPUR",
-      "city": "HARIDWAR",
-      "country": "India",
-      "zipCode": "249403"
-    }
-  ],
-  "pageable": {
-    "sort": {
-      "empty": true,
-      "sorted": false,
-      "unsorted": true
-    },
-    "offset": 0,
-    "pageNumber": 0,
-    "pageSize": 14,
-    "unpaged": false,
-    "paged": true
-  },
-  "last": true,
-  "totalPages": 1,
-  "totalElements": 1,
-  "size": 14,
-  "number": 0,
-  "sort": {
-    "empty": true,
-    "sorted": false,
-    "unsorted": true
-  },
-  "first": true,
-  "numberOfElements": 1,
-  "empty": false
-}
-```
+   ```bash
+   mvn clean install
+   ```
 
-Failure: `500 Internal Server Error`
+4. Run the application:
 
-#### Get Vendor by ID
+   ```bash
+   mvn spring-boot:run
+   ```
 
-##### Endpoint: `GET /vendors/{id}`
+5. Access the application at `http://localhost:8080`.
 
-Retrieves the details of a vendor with the specified ID.
+## Usage
 
-###### Path Parameter:
+### API Documentation
 
-- `id`: The ID of the vendor to retrieve.
+| Endpoint              | Method | Description               | Parameters                         |
+|-----------------------|--------|---------------------------|-------------------------------------|
+| `/vendors`            | POST   | Create a new vendor        | `Vendor` JSON                      |
+| `/vendors`            | GET    | Get all vendors (paginated)| `page`, `size`                     |
+| `/vendors/{id}`       | GET    | Get a vendor by ID         | `id` (Path Variable)               |
+| `/vendors/{id}`       | PUT    | Update a vendor by ID      | `id` (Path Variable), `Vendor` JSON|
+| `/vendors/{id}`       | DELETE | Delete a vendor by ID      | `id` (Path Variable)               |
 
-###### Response:
-
-Success: `200 OK`
+#### Sample JSON for Vendor
 
 ```json
 {
-  "id": 1,
-  "name": "Deepak Jayaprakash",
-  "bankAccountNo": "6543214859",
-  "bankName": "DEF Bank",
-  "addressLine1": "686 TYPE 2 SECTOR 1",
-  "addressLine2": "BHEL RANIPUR",
-  "city": "HARIDWAR",
-  "country": "India",
-  "zipCode": "249403"
+  "name": "Vendor Name",
+  "bankAccountNo": "1234567890",
+  "bankName": "Bank Name",
+  "addressLine1": "123 Street",
+  "addressLine2": "Suite 100",
+  "city": "City",
+  "country": "Country",
+  "zipCode": "12345"
 }
 ```
 
-Failure:
-- `Vendor not found: 404 Not Found`
-    ```json
-    
-    {
-        "message": "Vendor not found."
-    }
-    ```
+### Pagination
 
-- Server error: `500 Internal Server Error`
+Use the following query parameters for paginated results:
 
-#### Update Vendor
-##### Endpoint: `PUT /vendors/{id}`
+- **page**: The page number (starting from 0).
+- **size**: The number of vendors per page.
 
-Updates the details of a vendor with the specified ID.
+Example:
 
-###### Path Parameter:
+```http
+GET /vendors?page=0&size=10
+```
 
-- `id`: The ID of the vendor to update.
+### VendorService Methods
 
-###### Request Body:
+- **`createVendor(Vendor vendor)`**: Creates a new vendor after validation.
+- **`getAllVendors(Pageable pageable)`**: Retrieves all vendors with pagination.
+- **`getVendorById(Long id)`**: Fetches a vendor by its ID.
+- **`updateVendor(Long id, Vendor vendorDetails)`**: Updates the details of an existing vendor.
+- **`deleteVendor(Long id)`**: Deletes a vendor by its ID.
+
+### Validation
+
+The `VendorValidation` class provides validation for the following fields:
+
+- **Name**: Cannot be empty.
+- **Bank Account Number**: Must be numeric and cannot exceed a defined maximum length.
+- **Bank Name**: Cannot be empty.
+- **Zip Code**: Must be numeric and cannot exceed a defined maximum length.
+- **Address Line 1 and 2**: Validated for length.
+- **City**: Validated for length.
+- **Country**: Validated for length.
+
+Validation constants are defined in `Constants`.
+
+### Error Handling
+
+The service throws relevant exceptions with detailed error messages for invalid operations, such as:
+
+- **EntityNotFoundException**: When a vendor is not found by the provided ID.
+- **IllegalArgumentException**: When validation rules fail.
+
+### UI Interaction
+
+The frontend interacts with the backend API using `fetch` for the following operations:
+
+1. **Create Vendor**: Submits a new vendor form.
+2. **Edit Vendor**: Populates form fields with existing vendor details for editing.
+3. **Delete Vendor**: Sends a delete request for a vendor by its ID.
+4. **Pagination**: Displays previous and next buttons for paginated results.
+
+### Example UI Interactions
+
+1. **Create a Vendor**:
+
+   A form is used to input vendor details. Upon form submission, the details are sent via a POST request to the backend.
+
+2. **Edit a Vendor**:
+
+   The system fetches the vendor data based on the selected ID, populates the edit form, and updates the details via a PUT request.
+
+3. **Delete a Vendor**:
+
+   When a delete action is triggered, a DELETE request is sent to the backend to remove the vendor.
+
+4. **Pagination**:
+
+   Pagination controls allow navigation between pages of vendor results.
+
+## Error Handling
+
+The UI provides feedback through:
+
+- **Error Messages**: Displayed in case of failed operations such as validation errors or server errors.
+- **Success Messages**: Shown upon successful vendor creation, update, or deletion.
+
+Example error:
 
 ```json
 {
-  "id": 1,
-  "name": "Deepak Jayaprakash",
-  "bankAccountNo": "6543214859",
-  "bankName": "DEF Bank",
-  "addressLine1": "686 TYPE 2 SECTOR 1",
-  "addressLine2": "BHEL RANIPUR",
-  "city": "HARIDWAR",
-  "country": "India",
-  "zipCode": "249403"
+  "timestamp": "2024-09-16T10:00:00Z",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Vendor not found"
 }
 ```
 
-###### Response:
+## Conclusion
 
-Success: `200 OK`
-
-```json
-{
-    "message": "Vendor has been updated successfully."
-}
-```
-
-Failure:
-
-`Vendor not found: 404 Not Found`
-
-```json
-{
-    "message": "Vendor not found."
-}
-```
-
-Bad request: `400 Bad Request`
-
-```json
-{
-    "message": "Error message describing the issue."
-}
-```
-
-Server error: `500 Internal Server Error`
-
-#### Delete Vendor
-
-##### Endpoint: `DELETE /vendors/{id}`
-
-Deletes a vendor with the specified ID.
-
-###### Path Parameter:
-
-- `id`: The ID of the vendor to delete.
-Response:
-
-Success: `202 Accepted`
-
-```json
-{
-  "message": "Vendor has been deleted successfully."
-}
-```
-
-Failure:
-
-`Vendor not found: 404 Not Found`
-
-```json
-{
-  "message": "Vendor not found."
-}
-```
-
-Server error: `500 Internal Server Error`
-
-### Error Responses
-The API endpoints may return the following error responses:
-
-- `400 Bad Request`: The request is invalid or missing required fields.
-- `404 Not Found`: The requested resource (vendor or endpoint) was not found.
-- `500 Internal Server Error`: An internal server error occurred.
+VendorHub provides an efficient way to manage vendor data with proper validation, error handling, and a responsive UI interface. This service is built with scalability in mind, making use of pagination for large datasets.
